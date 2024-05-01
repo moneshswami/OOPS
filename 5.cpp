@@ -1,100 +1,66 @@
-#include&lt;iostream&gt;
+#include <iostream>
+#include <cstring>
 using namespace std;
 
-class MAT
-{
-int a[2][2];
-
+class Stud {
+private:
+    char* name;
+    int age;
+    double gpa;
 public:
-void accept()
-{
-cout&lt;&lt;&quot;\n\n Enter 4 element : &quot;;
-for(int i=0;i&lt;2;i++)
-{
-for(int j=0;j&lt;2;j++)
+    // Default constructor
+    Stud() : name(nullptr), age(0), gpa(0.0) {
+        cout << "Default Constructor called" << endl;
+    }
+    // Overloaded constructor
+    Stud(const char* n, int a, double g) : age(a), gpa(g) {
+        name = new char[strlen(n) + 1];
+        strcpy(name, n);
+        cout << "Overloaded Constructor called" << endl;
+    }
+    // Copy constructor
+    Stud(const Stud& other) : age(other.age), gpa(other.gpa) {
+        name = new char[strlen(other.name) + 1];
+        strcpy(name, other.name);
+        cout << "Copy Constructor called" << endl;
+    }
+    // Destructor
+    ~Stud() {
+        delete[] name;
+        cout << "Destructor called" << endl;
+    }
+    // Input student information from the user
+    void inputInfo() {
+        char buffer[100];
+        cout << "Enter name: ";
+        cin.getline(buffer, 100);
+        name = new char[strlen(buffer) + 1];
+        strcpy(name, buffer);
+        cout << "Enter age: ";
+        cin >> age;
 
-cin&gt;&gt;a[i][j];
-}
-}
-
-void display()
-{
-for(int i=0;i&lt;2;i++)
-{
-cout&lt;&lt;endl;
-for(int j=0;j&lt;2;j++)
-
-cout&lt;&lt;&quot; &quot;&lt;&lt;a[i][j];
-}
-}
-
-MAT operator+(MAT M2)
-{
-MAT M3;
-for(int i=0;i&lt;2;i++)
-{
-for(int j=0;j&lt;2;j++)
-{
-M3.a[i][j]=a[i][j]+M2.a[i][j];
-}
-}
-return M3;
-}
-
-MAT operator-(MAT M2)
-{
-MAT M3;
-for(int i=0;i&lt;2;i++)
-{
-for(int j=0;j&lt;2;j++)
-{
-M3.a[i][j]=a[i][j]-M2.a[i][j];
-}
-}
-return M3;
-}
-
-MAT operator*(MAT M2)
-{
-MAT M3;
-
-for(int i=0;i&lt;2;i++)
-{
-for(int j=0;j&lt;2;j++)
-{
-M3.a[i][j]=0;
-for(int k=0;k&lt;2;k++)
-{
-M3.a[i][j]=(a[i][k]*M2.a[k][j])+M3.a[i][j];
-}
-}
-}
-
-return M3;
-}
+        cout << "Enter GPA: ";
+        cin >> gpa;
+        cin.ignore(); // Clear the newline character from the buffer
+    }
+    // Display student information
+    void displayInfo() const {
+        cout << "Name: " << name << ", Age: " << age << ", GPA: " << gpa << endl;
+    }
 };
 
-int main()
-{
-MAT M1,M2,M3;
-
-cout&lt;&lt;&quot;\n\n Enter Matrix M1 value: &quot;;
-M1.accept();
-
-cout&lt;&lt;&quot;\n\n Enter Matrix M2 value: &quot;;
-M2.accept();
-
-M3=M1+M2;
-cout&lt;&lt;&quot;\n\n Addition of M1+M2 : &quot;;
-M3.display();
-
-M3=M1-M2;
-cout&lt;&lt;&quot;\n\n Subtrachtion of M1-M2 : &quot;;
-M3.display();
-
-M3=M1*M2;
-cout&lt;&lt;&quot;\n\n Multiplication of M1*M2 : &quot;;
-M3.display();
-
-return 0;
+int main() {
+    // Using default constructor
+    Stud defaultStud;
+    // Using overloaded constructor
+    Stud stud1("John", 20, 3.5);
+    stud1.displayInfo();
+    // Using copy constructor
+    Stud stud2 = stud1;
+    stud2.displayInfo();
+    // Using multiple constructors
+    Stud stud3; // Default constructor
+    stud3.inputInfo(); // Take input from user
+    stud3.displayInfo();
+    return 0;
 }
