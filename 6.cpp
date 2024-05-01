@@ -1,6 +1,4 @@
 #include <iostream>
-#include <stdio.h>
-#include <conio.h>
 using namespace std;
 
 class person {
@@ -54,6 +52,5 @@ int main() {
     e1.getac();
     e1.getad();
     e1.disp();
-    getch();
     return 0;
 }
